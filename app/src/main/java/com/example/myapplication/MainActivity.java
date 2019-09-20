@@ -17,6 +17,9 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+
+import org.ejml.simple.SimpleMatrix;
+
 import static android.text.InputType.TYPE_CLASS_NUMBER;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     Button tableSize;
     Button tableCalc;
 
+    boolean hasInitialState = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,16 +51,25 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        tableCalc = findViewById(R.id.buttonCalcRess);
-        tableCalc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int[][] tabelaInicial = MontarAtabela(numColunas, numLinhas);
-                printAtabela(tabelaInicial);
-                //showToast(String.valueOf(tabelaInicial[0][0]));
 
-            }
-        });
+
+            tableCalc = findViewById(R.id.buttonCalcRess);
+            tableCalc.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SimpleMatrix tabelaInicial = MontarAtabela(numColunas, numLinhas);
+
+
+                    //showToast(String.valueOf(tabelaInicial[0][0]));
+                    if (!hasInitialState){
+                        printAtabela(MultiplicaTabela(tabelaInicial));
+                    }
+                    else{
+                        printAtabela(tabelaInicial);
+                    }
+                }
+            });
+
 
 
         {
@@ -105,9 +118,9 @@ public class MainActivity extends AppCompatActivity {
         //end table
     }
 
-    public int[][] MontarAtabela(int numLinhas, int numColunas){
+    public SimpleMatrix MontarAtabela(int numLinhas, int numColunas){
 
-        int[][] tabelaDoUsuario = new int[numLinhas][numColunas];
+        SimpleMatrix tabelaDoUsuario = new SimpleMatrix(numLinhas,numColunas);
         int numeroFinal;
         EditText numInput;
 
@@ -122,14 +135,13 @@ public class MainActivity extends AppCompatActivity {
 
                 numInput = (EditText) findViewById(posicao);
                 numeroFinal = Integer.valueOf(numInput.getText().toString());
-
-                tabelaDoUsuario[i][j] = numeroFinal;
+                tabelaDoUsuario.set(i,j,numeroFinal);
             }
         }
         return tabelaDoUsuario;
     }
 
-    public void printAtabela(int[][] tabela) {
+    public void printAtabela(SimpleMatrix tabela) {
 
 
         //Alimenta a matriz com valores aleatórios
@@ -146,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
                         num.setInputType(TYPE_CLASS_NUMBER);
                         String pos = "" + i + j;
                         num.setId(Integer.valueOf(pos));
-                        num.setText(String.valueOf(tabela[i][j]));
+                        num.setText(String.valueOf(tabela.get(i,j)));
                         num.setWidth(100);
                         row.addView(num);
                     }
@@ -155,4 +167,11 @@ public class MainActivity extends AppCompatActivity {
                 }
 
     }
+
+    public SimpleMatrix MultiplicaTabela(SimpleMatrix tabela){
+
+
+        return tabela;
+    }
 }
+

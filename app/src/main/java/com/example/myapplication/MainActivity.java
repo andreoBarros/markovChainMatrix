@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,7 +11,6 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import androidx.annotation.IntDef;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -24,11 +24,13 @@ import static android.text.InputType.TYPE_CLASS_NUMBER;
 
 public class MainActivity extends AppCompatActivity {
 
-    int numLinhas, numColunas;
+    int numLinhas, numColunas, numGeracoes, numEstados;
     boolean tableExiste = false;
-    EditText LinhasInput, ColunasInput;
+    EditText LinhasInput, ColunasInput, GeracoesInput, EstadosInput;
+
     Button tableSize;
     Button tableCalc;
+    Button initialState;
 
     boolean hasInitialState = false;
 
@@ -39,8 +41,21 @@ public class MainActivity extends AppCompatActivity {
 
         LinhasInput = (EditText) findViewById(R.id.numLinhas);
         ColunasInput = (EditText) findViewById(R.id.numColunas);
+        GeracoesInput = (EditText) findViewById(R.id.geracao);
+        EstadosInput = findViewById(R.id.estados);
 
         tableSize = (Button) findViewById(R.id.buttonTableSize);
+        tableCalc = findViewById(R.id.buttonCalcRess);
+        initialState = (Button) findViewById(R.id.buttonIniStates);
+
+        initialState.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                numEstados = Integer.valueOf(EstadosInput.getText().toString());
+                initVector(numEstados);
+            }
+        });
+
         tableSize.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,24 +66,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
-            tableCalc = findViewById(R.id.buttonCalcRess);
-            tableCalc.setOnClickListener(new View.OnClickListener() {
+        tableCalc.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     SimpleMatrix tabelaInicial = MontarAtabela(numColunas, numLinhas);
-
-
-                    //showToast(String.valueOf(tabelaInicial[0][0]));
                     if (!hasInitialState){
-                        printAtabela(MultiplicaTabela(tabelaInicial));
+                        numGeracoes = Integer.valueOf(GeracoesInput.getText().toString());
+                        printAtabela(MultiplicaTabela(tabelaInicial, numGeracoes));
                     }
                     else{
                         printAtabela(tabelaInicial);
                     }
                 }
-            });
+        });
 
 
 
@@ -89,7 +99,53 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(MainActivity.this, text, Toast.LENGTH_SHORT).show();
     }
 
-    public void initTable(int linhas, int colunas){
+    public void initVector(int numEstados){
+        //table
+        TableLayout lvector = findViewById(R.id.vetorInicial);
+        //monta a tabela para o usuario colocar a entrada
+
+            TableRow vec= new TableRow(this);
+            TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT);
+            vec.setLayoutParams(lp);
+            for (int j = 0; j < numEstados; j++) {
+                EditText num = new EditText(this);
+                num.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                String pos = "00"  + j;
+                num.setId(Integer.valueOf(pos));
+                num.setWidth(100);
+                vec.addView(num);
+            }
+            lvector.addView(vec);
+
+        //end table
+    }
+
+    public SimpleMatrix MontarOvetor(int numLinhas, int numColunas){
+
+        numLinhas = 1;
+        SimpleMatrix vetorInicial = new SimpleMatrix(numLinhas,numColunas);
+        double numeroFinal;
+        EditText numInput;
+
+        //faz a tabela a partir da entrada do usuário
+        for (int i = 0; i < numLinhas; i++)
+        {
+            for (int j = 0; j < numColunas; j++)
+            {
+                String pos = "00" + j;
+                int posicao = getResources().getIdentifier(pos,
+                        "id", getPackageName());
+
+                numInput = (EditText) findViewById(posicao);
+                numeroFinal = Double.valueOf(numInput.getText().toString());
+                vetorInicial.set(i,j,numeroFinal);
+            }
+        }
+        return vetorInicial;
+    }
+
+
+    public void initTable(double linhas, double colunas){
         //table
         if(tableExiste){
 
@@ -98,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
         TableLayout ll = findViewById(R.id.table);
         tableExiste = true;
         tableCalc.setVisibility(View.VISIBLE);
-
+        //monta a tabela para o usuario colocar a entrada
         for (int i = 0; i < linhas; i++) {
 
             TableRow row= new TableRow(this);
@@ -106,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
             row.setLayoutParams(lp);
             for (int j = 0; j < colunas; j++) {
                 EditText num = new EditText(this);
-                num.setInputType(TYPE_CLASS_NUMBER);
+                num.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
                 String pos = "" + i + j;
                 num.setId(Integer.valueOf(pos));
                 num.setWidth(100);
@@ -121,10 +177,10 @@ public class MainActivity extends AppCompatActivity {
     public SimpleMatrix MontarAtabela(int numLinhas, int numColunas){
 
         SimpleMatrix tabelaDoUsuario = new SimpleMatrix(numLinhas,numColunas);
-        int numeroFinal;
+        double numeroFinal;
         EditText numInput;
 
-        //Alimenta a matriz com valores aleatórios
+        //faz a tabela a partir da entrada do usuário
         for (int i = 0; i < numLinhas; i++)
         {
             for (int j = 0; j < numColunas; j++)
@@ -134,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
                         "id", getPackageName());
 
                 numInput = (EditText) findViewById(posicao);
-                numeroFinal = Integer.valueOf(numInput.getText().toString());
+                numeroFinal = Double.valueOf(numInput.getText().toString());
                 tabelaDoUsuario.set(i,j,numeroFinal);
             }
         }
@@ -168,10 +224,20 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public SimpleMatrix MultiplicaTabela(SimpleMatrix tabela){
+    public SimpleMatrix MultiplicaTabela(SimpleMatrix tabela, int geracao){
+
+        SimpleMatrix tabelaMultiplicada = tabela;
+        //essa variavel é placehold para o dia que tiver como escolher a geração pela interface
+
+            for (int i = 1; i < geracao; i++) {
+                tabela = tabela.mult(tabelaMultiplicada);
+            }
+                return tabela;
 
 
-        return tabela;
     }
+
+
+
 }
 

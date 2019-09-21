@@ -25,12 +25,49 @@
         tools:layout_editor_absoluteY="56dp">
 
         <LinearLayout
+            android:id="@+id/layoutIniState"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@id/linearLayout"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/estados"
+                    android:layout_width="187dp"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="nº de estados"
+                    android:inputType="number" />
+
+                <Button
+                    android:id="@+id/buttonIniStates"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Criar estado inicial"
+                    tools:text="Criar estado inicial" />
+            </LinearLayout>
+
+            <TableLayout
+                android:id="@+id/vetorInicial"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:background="#ECECEC" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="wrap_content"
-            android:layout_height="96dp"
-            android:layout_marginStart="8dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:background="#00747474"
             android:backgroundTint="#FFFFFF"
@@ -38,7 +75,7 @@
             app:layout_constraintBottom_toTopOf="@+id/table"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@id/layoutIniState">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -63,12 +100,27 @@
 
             </LinearLayout>
 
-            <Button
-                android:id="@+id/buttonTableSize"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Criar Tabela"
-                tools:text="Criar Tabela" />
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/geracao"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="nº de gerações"
+                    android:inputType="number" />
+
+                <Button
+                    android:id="@+id/buttonTableSize"
+                    android:layout_width="199dp"
+                    android:layout_height="wrap_content"
+                    android:text="Criar Tabela"
+                    tools:text="Criar Tabela" />
+            </LinearLayout>
 
         </LinearLayout>
 

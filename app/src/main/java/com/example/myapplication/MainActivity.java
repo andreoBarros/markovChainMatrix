@@ -79,8 +79,7 @@ public class MainActivity extends AppCompatActivity {
                         printAtabela(MultiplicaTabela(tabelaInicial, numGeracoes));
                     }
                     else{
-                        tabelaInicial = estadoInicial.mult(MultiplicaTabela(tabelaInicial, numGeracoes));
-                        printVetor(tabelaInicial);
+                        printVetor(estadoInicial.mult(MultiplicaTabela(tabelaInicial, numGeracoes)));
                     }
                 }
         });
@@ -88,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         multiplicaTransicaoInicial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                estadoInicial = MontarOvetor(1, numEstados);
+                estadoInicial = MontarOvetor(numEstados);
                 printVetor(estadoInicial);
             }
         });
@@ -133,9 +132,9 @@ public class MainActivity extends AppCompatActivity {
         //end table
     }
 //--------------------------------------------------------------------------------------
-    public SimpleMatrix MontarOvetor(int numLinhas, int numColunas){
+    public SimpleMatrix MontarOvetor(int numColunas){
 
-        numLinhas = 1;
+        int numLinhas = 1;
         SimpleMatrix vetorInicial = new SimpleMatrix(numLinhas,numColunas);
         double numeroFinal;
         EditText numInput;
@@ -171,11 +170,12 @@ public class MainActivity extends AppCompatActivity {
         //Alimenta a matriz com valores aleatórios
         TableLayout lvector = findViewById(R.id.vetorInicial);
 
-            TableRow vec= new TableRow(this);
+        for (int i = 0; i < tabela.numRows(); i++) {
+            TableRow vec = new TableRow(this);
             TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT);
             vec.setLayoutParams(lp);
 
-            for (int j = 0; j < numEstados; j++) {
+            for (int j = 0; j < tabela.numCols(); j++) {
                 EditText num = new EditText(this);
                 num.setInputType(TYPE_CLASS_NUMBER);
                 num.setInputType(TYPE_CLASS_NUMBER);
@@ -187,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             lvector.addView(vec);
-        
+        }
 
     }
 //--------------------------------------------------------------------------------------
@@ -253,13 +253,13 @@ public class MainActivity extends AppCompatActivity {
 
         //Alimenta a matriz com valores aleatórios
                 TableLayout ll = findViewById(R.id.table);
-                for (int i = 0; i < numLinhas; i++) {
+                for (int i = 0; i < tabela.numRows(); i++) {
 
                     TableRow row= new TableRow(this);
                     TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT);
                     row.setLayoutParams(lp);
 
-                    for (int j = 0; j < numColunas; j++) {
+                    for (int j = 0; j < tabela.numRows(); j++) {
                         EditText num = new EditText(this);
                         num.setInputType(TYPE_CLASS_NUMBER);
                         num.setInputType(TYPE_CLASS_NUMBER);

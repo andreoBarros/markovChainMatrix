@@ -7,9 +7,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
-import android.widget.Toast;
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+//import android.widget.Toast;
+//
+//import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -52,27 +52,21 @@ public class MainActivity extends AppCompatActivity {
         multiplicaTransicaoInicial = findViewById(R.id.buttonMultMatriz);
 
 
-        initialState.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        initialState.setOnClickListener((View v) ->{
                 numEstados = Integer.valueOf(EstadosInput.getText().toString());
                 initVector(numEstados);
-            }
+
         });
 
-        tableSize.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        tableSize.setOnClickListener((View v) -> {
                 numLinhas = Integer.valueOf(LinhasInput.getText().toString());
                 numColunas = Integer.valueOf(ColunasInput.getText().toString());
                 initTable(numLinhas, numColunas);
                 //showToast(String.valueOf(numColunas));
-            }
+
         });
 
-        tableCalc.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+        tableCalc.setOnClickListener((View v) ->{
                     SimpleMatrix tabelaInicial = MontarAtabela(numColunas, numLinhas);
                     numGeracoes = Integer.valueOf(GeracoesInput.getText().toString());
                     if (!hasInitialState){
@@ -81,15 +75,13 @@ public class MainActivity extends AppCompatActivity {
                     else{
                         printVetor(estadoInicial.mult(MultiplicaTabela(tabelaInicial, numGeracoes)));
                     }
-                }
+
         });
 
-        multiplicaTransicaoInicial.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        multiplicaTransicaoInicial.setOnClickListener((View v) ->{
                 estadoInicial = MontarOvetor(numEstados);
                 printVetor(estadoInicial);
-            }
+
         });
 
         {

@@ -41,14 +41,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        LinhasInput = (EditText) findViewById(R.id.numLinhas);
-        ColunasInput = (EditText) findViewById(R.id.numColunas);
-        GeracoesInput = (EditText) findViewById(R.id.geracao);
+        LinhasInput =  findViewById(R.id.numLinhas);
+        ColunasInput =  findViewById(R.id.numColunas);
+        GeracoesInput = findViewById(R.id.geracao);
         EstadosInput = findViewById(R.id.estados);
 
-        tableSize = (Button) findViewById(R.id.buttonTableSize);
+        tableSize = findViewById(R.id.buttonTableSize);
         tableCalc = findViewById(R.id.buttonCalcRess);
-        initialState = (Button) findViewById(R.id.buttonIniStates);
+        initialState = findViewById(R.id.buttonIniStates);
         multiplicaTransicaoInicial = findViewById(R.id.buttonMultMatriz);
 
 
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         {
-            BottomNavigationView navView = findViewById(R.id.nav_view);
+//            BottomNavigationView navView = findViewById(R.id.nav_view);
             // Passing each menu ID as a set of Ids because each
             // menu should be considered as top level destinations.
             AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
@@ -105,9 +105,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 //--------------------------------------------------------------------------------------
-    private void showToast(String text){
-        Toast.makeText(MainActivity.this, text, Toast.LENGTH_SHORT).show();
-    }
+//    private void showToast(String text){
+//        Toast.makeText(MainActivity.this, text, Toast.LENGTH_SHORT).show();
+//    }
 //--------------------------------------------------------------------------------------
     public void initVector(int numEstados){
         //table
@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
                 int posicao = getResources().getIdentifier(pos,
                         "id", getPackageName());
 
-                numInput = (EditText) findViewById(posicao);
+                numInput = findViewById(posicao);
 
                 if(numInput.getText().toString().equals("")){
                     numeroFinal = 0;
@@ -193,9 +193,9 @@ public class MainActivity extends AppCompatActivity {
 //--------------------------------------------------------------------------------------
     public void initTable(double linhas, double colunas){
         //table
-        if(tableExiste){
-
-        }
+//        if(tableExiste){
+//
+//        }
 
         TableLayout ll = findViewById(R.id.table);
         tableExiste = true;
@@ -235,7 +235,7 @@ public class MainActivity extends AppCompatActivity {
                 int posicao = getResources().getIdentifier(pos,
                         "id", getPackageName());
 
-                numInput = (EditText) findViewById(posicao);
+                numInput = findViewById(posicao);
                 if(numInput.getText().toString().equals("")){
                     numeroFinal = 0;
                 }

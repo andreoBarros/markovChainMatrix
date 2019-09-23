@@ -25,97 +25,161 @@
         tools:layout_editor_absoluteY="56dp">
 
         <LinearLayout
-            android:id="@+id/layoutIniState"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@id/linearLayout"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/layoutIniState"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:gravity="center"
+                android:orientation="vertical">
 
-                <EditText
-                    android:id="@+id/estados"
-                    android:layout_width="237dp"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="nº de estados"
-                    android:inputType="number" />
-
-                <Button
-                    android:id="@+id/buttonIniStates"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Criar estado inicial"
-                    tools:text="Criar estado inicial" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/buttonMultMatriz"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:text="Salvar Vetor" />
-
-                <TableLayout
-                    android:id="@+id/vetorInicial"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginEnd="24dp"
-                    android:background="#ECECEC" />
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/estados"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:gravity="center"
+                        android:hint="nº de estados"
+                        android:inputType="number" />
+
+                    <Button
+                        android:id="@+id/buttonIniStates"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Criar estado inicial"
+                        tools:text="Criar estado inicial" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical">
+
+                            <TableLayout
+                                android:id="@+id/vetorInicial"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="24dp"
+                                android:layout_marginEnd="24dp"
+                                android:background="#ECECEC"
+                                android:gravity="center"
+                                android:orientation="vertical" />
+                        </LinearLayout>
+                    </ScrollView>
+
+                    <Button
+                        android:id="@+id/buttonMultMatriz"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginEnd="24dp"
+                        android:gravity="center"
+                        android:text="Salvar Vetor"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
             </LinearLayout>
 
-        </LinearLayout>
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="#00747474"
+                android:backgroundTint="#FFFFFF"
+                android:gravity="center"
+                android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:background="#00747474"
-            android:backgroundTint="#FFFFFF"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@+id/table"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layoutIniState">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/numColunas"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:hint="nº colunas"
+                        android:inputType="number" />
+
+                    <EditText
+                        android:id="@+id/numLinhas"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:hint="nº linhas"
+                        android:inputType="number" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/buttonTableSize"
+                        android:layout_width="199dp"
+                        android:layout_height="wrap_content"
+                        android:text="Criar Tabela"
+                        tools:text="Criar Tabela" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <TableLayout
+                        android:id="@+id/tableInput"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="0dp"
+                        android:background="#ECECEC"
+                        android:gravity="center_horizontal" />
+                </LinearLayout>
+            </ScrollView>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/numColunas"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="nº colunas"
-                    android:inputType="number" />
-
-                <EditText
-                    android:id="@+id/numLinhas"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="nº linhas"
-                    android:inputType="number" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:gravity="center"
                 android:orientation="horizontal">
 
                 <EditText
@@ -125,55 +189,49 @@
                     android:layout_weight="1"
                     android:ems="10"
                     android:hint="nº de gerações"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:visibility="gone" />
 
                 <Button
-                    android:id="@+id/buttonTableSize"
-                    android:layout_width="199dp"
+                    android:id="@+id/buttonCalcRess"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Criar Tabela"
-                    tools:text="Criar Tabela" />
+                    android:layout_marginEnd="24dp"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:text="Estados Nessa iteração"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/buttonShowGeneration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Iterar a tabela"
+                    android:visibility="gone" />
+
             </LinearLayout>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <TableLayout
+                        android:id="@+id/tableOutput"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal" />
+                </LinearLayout>
+            </ScrollView>
 
         </LinearLayout>
 
-        <TableLayout
-            android:id="@+id/table"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="24dp"
-            android:background="#ECECEC"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
-
-        <Button
-            android:id="@+id/buttonCalcRess"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
-            android:fontFamily="sans-serif-smallcaps"
-            android:text="Calcular Tabela"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/table" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginEnd="0dp"
-        android:background="?android:attr/windowBackground"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:menu="@menu/bottom_nav_menu" >
-    </com.google.android.material.bottomnavigation.BottomNavigationView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

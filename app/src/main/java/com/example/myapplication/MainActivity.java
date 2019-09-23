@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.TextView;
 //import android.widget.Toast;
 //
 //import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -32,9 +33,11 @@ public class MainActivity extends AppCompatActivity {
     Button tableCalc;
     Button initialState;
     Button multiplicaTransicaoInicial;
+    Button matrixIteration;
+
     SimpleMatrix estadoInicial = SimpleMatrix.identity('0');
 
-    boolean hasInitialState = false;
+    private boolean hasInitialState = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         tableCalc = findViewById(R.id.buttonCalcRess);
         initialState = findViewById(R.id.buttonIniStates);
         multiplicaTransicaoInicial = findViewById(R.id.buttonMultMatriz);
-
+        matrixIteration = findViewById(R.id.buttonShowGeneration);
 
         initialState.setOnClickListener((View v) ->{
                 numEstados = Integer.valueOf(EstadosInput.getText().toString());
@@ -63,24 +66,24 @@ public class MainActivity extends AppCompatActivity {
                 numColunas = Integer.valueOf(ColunasInput.getText().toString());
                 initTable(numLinhas, numColunas);
                 //showToast(String.valueOf(numColunas));
-
         });
 
         tableCalc.setOnClickListener((View v) ->{
                     SimpleMatrix tabelaInicial = MontarAtabela(numColunas, numLinhas);
                     numGeracoes = Integer.valueOf(GeracoesInput.getText().toString());
-                    if (!hasInitialState){
-                        printAtabela(MultiplicaTabela(tabelaInicial, numGeracoes));
-                    }
-                    else{
-                        printVetor(estadoInicial.mult(MultiplicaTabela(tabelaInicial, numGeracoes)));
-                    }
-
+                    printVetor(estadoInicial.mult(MultiplicaTabela(tabelaInicial, numGeracoes)));
         });
 
         multiplicaTransicaoInicial.setOnClickListener((View v) ->{
                 estadoInicial = MontarOvetor(numEstados);
-                printVetor(estadoInicial);
+                //printVetor(estadoInicial);
+        });
+
+        matrixIteration.setOnClickListener((View v) ->{
+            SimpleMatrix tabelaInicial = MontarAtabela(numColunas, numLinhas);
+            numGeracoes = Integer.valueOf(GeracoesInput.getText().toString());
+             //   printAtabela(tabelaInicial);
+            printAtabela((MultiplicaTabela(tabelaInicial, numGeracoes)));
 
         });
 
@@ -101,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
 //        Toast.makeText(MainActivity.this, text, Toast.LENGTH_SHORT).show();
 //    }
 //--------------------------------------------------------------------------------------
-    public void initVector(int numEstados){
+    public void initVector(int numStates){
         //table
         TableLayout lvector = findViewById(R.id.vetorInicial);
 
@@ -111,10 +114,10 @@ public class MainActivity extends AppCompatActivity {
             TableRow vec= new TableRow(this);
             TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT);
             vec.setLayoutParams(lp);
-            for (int j = 0; j < numEstados; j++) {
+            for (int j = 0; j < numStates; j++) {
                 EditText num = new EditText(this);
                 num.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
-                String pos = "00"  + j;
+                String pos = "10"  + j;
                 num.setId(Integer.valueOf(pos));
                 num.setWidth(100);
                 vec.addView(num);
@@ -124,17 +127,21 @@ public class MainActivity extends AppCompatActivity {
         //end table
     }
 //--------------------------------------------------------------------------------------
-    public SimpleMatrix MontarOvetor(int numColunas){
+    public SimpleMatrix MontarOvetor(int numColumns){
 
         int numLinhas = 1;
-        SimpleMatrix vetorInicial = new SimpleMatrix(numLinhas,numColunas);
+        SimpleMatrix vetorInicial = new SimpleMatrix(numLinhas,numColumns);
         double numeroFinal;
         EditText numInput;
 
+        hasInitialState = true;
+        if(hasInitialState && tableExiste){
+            tableCalc.setVisibility(View.VISIBLE);
+        }
         //faz a tabela a partir da entrada do usuário
         for (int i = 0; i < numLinhas; i++)
         {
-            for (int j = 0; j < numColunas; j++)
+            for (int j = 0; j < numColumns; j++)
             {
                 String pos = "00" + j;
                 int posicao = getResources().getIdentifier(pos,
@@ -156,25 +163,26 @@ public class MainActivity extends AppCompatActivity {
         return vetorInicial;
     }
 //--------------------------------------------------------------------------------------
-    public void printVetor(SimpleMatrix tabela) {
+    public void printVetor(SimpleMatrix matrix) {
 
 
         //Alimenta a matriz com valores aleatórios
-        TableLayout lvector = findViewById(R.id.vetorInicial);
+        TableLayout lvector = findViewById(R.id.tableOutput);
 
-        for (int i = 0; i < tabela.numRows(); i++) {
+        for (int i = 0; i < matrix.numRows(); i++) {
             TableRow vec = new TableRow(this);
             TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT);
             vec.setLayoutParams(lp);
 
-            for (int j = 0; j < tabela.numCols(); j++) {
-                EditText num = new EditText(this);
+            for (int j = 0; j < matrix.numCols(); j++) {
+                TextView num = new TextView(this);
                 num.setInputType(TYPE_CLASS_NUMBER);
                 num.setInputType(TYPE_CLASS_NUMBER);
                 String pos = "00" + j;
                 num.setId(Integer.valueOf(pos));
-                num.setText(String.valueOf(tabela.get(j)));
+                num.setText(String.valueOf(matrix.get(j)));
                 num.setWidth(100);
+                num.setPadding(5,15,5,5);
                 vec.addView(num);
             }
 
@@ -183,22 +191,26 @@ public class MainActivity extends AppCompatActivity {
 
     }
 //--------------------------------------------------------------------------------------
-    public void initTable(double linhas, double colunas){
+    public void initTable(double lines, double columns){
         //table
 //        if(tableExiste){
 //
 //        }
 
-        TableLayout ll = findViewById(R.id.table);
+        TableLayout ll = findViewById(R.id.tableInput);
         tableExiste = true;
-        tableCalc.setVisibility(View.VISIBLE);
+        findViewById(R.id.geracao).setVisibility(View.VISIBLE);
+        findViewById(R.id.buttonShowGeneration).setVisibility(View.VISIBLE);
+        if(hasInitialState && tableExiste){
+            tableCalc.setVisibility(View.VISIBLE);
+        }
         //monta a tabela para o usuario colocar a entrada
-        for (int i = 0; i < linhas; i++) {
+        for (int i = 0; i < lines; i++) {
 
             TableRow row= new TableRow(this);
             TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT);
             row.setLayoutParams(lp);
-            for (int j = 0; j < colunas; j++) {
+            for (int j = 0; j < columns; j++) {
                 EditText num = new EditText(this);
                 num.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
                 String pos = "" + i + j;
@@ -212,16 +224,16 @@ public class MainActivity extends AppCompatActivity {
         //end table
     }
 //--------------------------------------------------------------------------------------
-    public SimpleMatrix MontarAtabela(int numLinhas, int numColunas){
+    public SimpleMatrix MontarAtabela(int numLines, int numColumns){
 
-        SimpleMatrix tabelaDoUsuario = new SimpleMatrix(numLinhas,numColunas);
+        SimpleMatrix tabelaDoUsuario = new SimpleMatrix(numLines,numColumns);
         double numeroFinal;
         EditText numInput;
 
         //faz a tabela a partir da entrada do usuário
-        for (int i = 0; i < numLinhas; i++)
+        for (int i = 0; i < numLines; i++)
         {
-            for (int j = 0; j < numColunas; j++)
+            for (int j = 0; j < numColumns; j++)
             {
                 String pos = "" + i + j;
                 int posicao = getResources().getIdentifier(pos,
@@ -240,25 +252,26 @@ public class MainActivity extends AppCompatActivity {
         return tabelaDoUsuario;
     }
 //--------------------------------------------------------------------------------------
-    public void printAtabela(SimpleMatrix tabela) {
+    public void printAtabela(SimpleMatrix matrix) {
 
 
         //Alimenta a matriz com valores aleatórios
-                TableLayout ll = findViewById(R.id.table);
-                for (int i = 0; i < tabela.numRows(); i++) {
+                TableLayout ll = findViewById(R.id.tableOutput);
+                for (int i = 0; i < matrix.numRows(); i++) {
 
                     TableRow row= new TableRow(this);
                     TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT);
                     row.setLayoutParams(lp);
 
-                    for (int j = 0; j < tabela.numRows(); j++) {
-                        EditText num = new EditText(this);
+                    for (int j = 0; j < matrix.numRows(); j++) {
+                        TextView num = new TextView(this);
                         num.setInputType(TYPE_CLASS_NUMBER);
                         num.setInputType(TYPE_CLASS_NUMBER);
                         String pos = "" + i + j;
                         num.setId(Integer.valueOf(pos));
-                        num.setText(String.valueOf(tabela.get(i,j)));
+                        num.setText(String.valueOf(matrix.get(i,j)));
                         num.setWidth(100);
+                        num.setPadding(5,5,5,5);
                         row.addView(num);
                     }
 
@@ -267,15 +280,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 //--------------------------------------------------------------------------------------
-    public SimpleMatrix MultiplicaTabela(SimpleMatrix tabela, int geracao){
+    public SimpleMatrix MultiplicaTabela(SimpleMatrix matrix, int generation){
 
-        SimpleMatrix tabelaMultiplicada = tabela;
+        SimpleMatrix tabelaMultiplicada = matrix;
         //essa variavel é placehold para o dia que tiver como escolher a geração pela interface
 
-            for (int i = 1; i < geracao; i++) {
-                tabela = tabela.mult(tabelaMultiplicada);
+            for (int i = 1; i < generation; i++) {
+                matrix = matrix.mult(tabelaMultiplicada);
             }
-                return tabela;
+                return matrix;
 
 
     }

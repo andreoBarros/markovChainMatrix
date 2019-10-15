@@ -44,16 +44,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        LinhasInput =  findViewById(R.id.numLinhas);
-        ColunasInput =  findViewById(R.id.numColunas);
-        GeracoesInput = findViewById(R.id.geracao);
-        EstadosInput = findViewById(R.id.estados);
+        // uma porrada de variáveis
+        {
+            LinhasInput = findViewById(R.id.numLinhas);
+            ColunasInput = findViewById(R.id.numColunas);
+            GeracoesInput = findViewById(R.id.geracao);
+            EstadosInput = findViewById(R.id.estados);
 
-        tableSize = findViewById(R.id.buttonTableSize);
-        tableCalc = findViewById(R.id.buttonCalcRess);
-        initialState = findViewById(R.id.buttonIniStates);
-        multiplicaTransicaoInicial = findViewById(R.id.buttonMultMatriz);
-        matrixIteration = findViewById(R.id.buttonShowGeneration);
+            tableSize = findViewById(R.id.buttonTableSize);
+            tableCalc = findViewById(R.id.buttonCalcRess);
+            initialState = findViewById(R.id.buttonIniStates);
+            multiplicaTransicaoInicial = findViewById(R.id.buttonMultMatriz);
+            matrixIteration = findViewById(R.id.buttonShowGeneration);
+        }
 
         initialState.setOnClickListener((View v) ->{
                 numEstados = Integer.valueOf(EstadosInput.getText().toString());
@@ -108,10 +111,14 @@ public class MainActivity extends AppCompatActivity {
         //table
         TableLayout lvector = findViewById(R.id.vetorInicial);
 
+        lvector.removeAllViews();
+
         multiplicaTransicaoInicial.setVisibility(View.VISIBLE);
         //monta a tabela para o usuario colocar a entrada
 
             TableRow vec= new TableRow(this);
+
+
             TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT);
             vec.setLayoutParams(lp);
             for (int j = 0; j < numStates; j++) {
@@ -143,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
         {
             for (int j = 0; j < numColumns; j++)
             {
-                String pos = "00" + j;
+                String pos = "10" + j;
                 int posicao = getResources().getIdentifier(pos,
                         "id", getPackageName());
 
@@ -192,13 +199,12 @@ public class MainActivity extends AppCompatActivity {
     }
 //--------------------------------------------------------------------------------------
     public void initTable(double lines, double columns){
-        //table
-//        if(tableExiste){
-//
-//        }
 
         TableLayout ll = findViewById(R.id.tableInput);
+
+        ll.removeAllViews();
         tableExiste = true;
+
         findViewById(R.id.geracao).setVisibility(View.VISIBLE);
         findViewById(R.id.buttonShowGeneration).setVisibility(View.VISIBLE);
         if(hasInitialState && tableExiste){
